@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ArduinoWithBlueTooth</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Bluetooth1</string>
+    <string name="btn_ON">Включить LED</string>
+    <string name="btn_OFF">Выключить LED</string>
+</resources>

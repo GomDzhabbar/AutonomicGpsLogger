@@ -1,0 +1,132 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/btnOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_OFF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/btnOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_ON"
+        android:clickable="false"
+        android:layout_alignTop="@+id/btnOff"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/txtArduino"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Connection:"
+        android:focusable="true"
+        android:textSize="30dp"
+        android:textIsSelectable="false"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:alpha="0.5"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reConnecting"
+        android:id="@+id/btReConnecting"
+        android:layout_above="@+id/btnOff"
+        android:layout_alignEnd="@+id/btnOff"
+        android:layout_marginBottom="123dp"
+        android:layout_alignStart="@+id/btnOff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Освещенность:"
+        android:id="@+id/textView"
+        android:layout_below="@+id/txtArduino"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Температура:"
+        android:id="@+id/textView2"
+        android:layout_marginTop="26dp"
+        android:layout_below="@+id/textView"
+        android:layout_toStartOf="@+id/hydrText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Влажность:"
+        android:id="@+id/textView3"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/textView2"
+        android:layout_toStartOf="@+id/hydrText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/lightText"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignEnd="@+id/btReConnecting"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_marginLeft="10dp"
+        android:text="340"
+        android:textSize="30dp"
+        android:textColor="#9ACD32"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/temperText"
+        android:layout_marginLeft="10dp"
+        android:text="340"
+        android:textSize="30dp"
+        android:textColor="#FF4500"
+        android:layout_above="@+id/textView3"
+        android:textStyle="bold"
+        android:layout_alignEnd="@+id/lightText"
+        android:layout_toEndOf="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/hydrText"
+        android:layout_marginLeft="10dp"
+        android:text="340"
+        android:textSize="30dp"
+        android:textColor="#1E90FF"
+        android:layout_alignBottom="@+id/textView3"
+        android:textStyle="bold"
+        android:layout_alignEnd="@+id/temperText"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="get"
+        android:id="@+id/downloadMaps"
+        android:layout_alignTop="@+id/btReConnecting"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
