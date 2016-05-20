@@ -11,7 +11,7 @@ TinyGPS gps;
 SoftwareSerial ss(5, 3);
 static void print_float(float val, float invalid, int len, int prec);
 
-boolean menu = false, select = false;
+boolean menu = false, select = false, clear = true;
 int mode = 0, mode_menu = 0;
 
 int bee = 11;
@@ -75,30 +75,33 @@ void setup(){
 void loop(){
   char sz[32];
 
-  if(displayOn)
-    lcd.clear();
+  // if(displayOn)
+    // lcd.clear();
 
   float flat, flon;
   unsigned long age, date, time, chars = 0;
   gps.f_get_position(&flat, &flon, &age);
 
-  if(analogRead(3) < 500){
-    displayOn = false;
-    Serial.println(analogRead(3));
-  }
-  else {
-    displayOn = true;
-    Serial.println(analogRead(3));
-  }
-
-
+  // if(analogRead(3) < 500){
+  //   displayOn = false;
+  //   Serial.println(analogRead(3));
+  // }
+  // else {
+  //   displayOn = true;
+  //   Serial.println(analogRead(3));
+  // }
+  if(clear){
+    lcd.clear();
+  }    
 
   if (flat == TinyGPS::GPS_INVALID_F_ANGLE){
     if(displayOn)
   	 lcd.print("gps error");
      delayValue = 1000;
   } else {
-    delayValue = 60000;
+    clear = false;
+
+    delayValue = 30000;
     int year;
     byte month, day, hour, minute, second, hundredths;
     unsigned long age;
@@ -122,10 +125,14 @@ void loop(){
 //----------------------------------------------------------------------------------------------------------------------------------------
       sprintf(sz, "%04d-%02d-%02dT%02d:%02d:%02dZ",year, month, day, hour+3, minute, second);
      
-      // Serial.print(sz);
+      
       dataFile.print("<when>");
       dataFile.print(sz);
       dataFile.println("</when>");
+
+      Serial.print("<when>");
+      Serial.print(sz);
+      Serial.print("</when>");
 
       sprintf(sz, "%02d:%02d",
             hour+3, minute);
@@ -162,6 +169,12 @@ void loop(){
 			dataFile.print(flat,5);
       dataFile.println("</gx:coord>\n");
 
+      Serial.print("<gx:coord>");
+      Serial.print(flon);
+      Serial.print(" ");
+      Serial.print(flat);
+      Serial.println("</gx:coord>");
+
       countDot++;
 
       dataFile.close();
@@ -177,7 +190,7 @@ void loop(){
 	  // Serial.println();
   }	
   
-  delay(delayValue);
+  smartdelay(delayValue);
 }
 
 static void smartdelay(unsigned long ms)
