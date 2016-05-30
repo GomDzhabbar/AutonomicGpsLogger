@@ -14,7 +14,10 @@ static void print_float(float val, float invalid, int len, int prec);
 boolean menu = false, select = false, clear = true;
 int mode = 0, mode_menu = 0;
 
-int bee = 11;
+// int melody[] = {
+//   NOTE_C4, NOTE_G3,NOTE_G3, NOTE_A3, NOTE_G3,0, NOTE_B3, NOTE_C4};
+// int noteDurations[] = {
+//   4, 8, 8, 4,4,4,4,4 };
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -22,6 +25,7 @@ int lcd_key     = 0;
 int adc_key_in  = 0;
 int countDot = 1;
 int delayValue = 1000;
+int notaPin = 11;
 
 File dataFile;
 
@@ -48,9 +52,21 @@ int read_LCD_buttons(){
 
     return btnNONE;
 }
+void oneTone(int nota, int longTime, int itemPin) {
+    tone(notaPin, nota);
+    delay(longTime);
+    noTone(notaPin);
+  }
+void setTone(int nota, int longTime, int itemPin){
+  // tone(11, 1023);
+  //   delay(200);
+  //   noTone(11);
+  for(int i = 0; i < itemPin; i++){
+    oneTone(nota, longTime, itemPin);
+  }
+}
 
 void setup(){
-
 	Serial.begin(9600);
 	ss.begin(9600);
 
@@ -59,11 +75,18 @@ void setup(){
 	// // pinMode(bee, OUTPUT);
 	pinMode(0, INPUT);
 	pinMode(1, INPUT);
-	pinMode(12, OUTPUT);
+	// pinMode(12, OUTPUT);
 
 	lcd.begin();
 	lcd.backlight();
 	lcd.setCursor(0,0); 
+
+  setTone(1023,200,2);
+  // noTone(11);
+  // tone(11, 1000);
+  // delay(200);
+  // noTone(11);
+
 
 	if (!SD.begin(4))
 	lcd.println("Card failed  ");
@@ -73,6 +96,7 @@ void setup(){
 }
 
 void loop(){
+
   char sz[32];
 
   // if(displayOn)
@@ -84,7 +108,7 @@ void loop(){
 
   // if(analogRead(3) < 500){
   //   displayOn = false;
-  //   Serial.println(analogRead(3));
+    // Serial.print(123);
   // }
   // else {
   //   displayOn = true;
@@ -97,11 +121,12 @@ void loop(){
   if (flat == TinyGPS::GPS_INVALID_F_ANGLE){
     if(displayOn)
   	 lcd.print("gps error");
+     Serial.println("gps error");
      delayValue = 1000;
   } else {
     clear = false;
 
-    delayValue = 30000;
+    delayValue = 1000;
     int year;
     byte month, day, hour, minute, second, hundredths;
     unsigned long age;
@@ -130,9 +155,9 @@ void loop(){
       dataFile.print(sz);
       dataFile.println("</when>");
 
-      Serial.print("<when>");
-      Serial.print(sz);
-      Serial.print("</when>");
+      // Serial.print("<when>");
+      // Serial.print(sz);
+      // Serial.print("</when>");
 
       sprintf(sz, "%02d:%02d",
             hour+3, minute);
@@ -149,7 +174,7 @@ void loop(){
       	lcd.setCursor(0,0); 
       }
  //----------------------------------------------------------------------------------------------------------------------------------------
-			print_float(flon, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
+			// print_float(flon, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
 
       if(displayOn) 
 			 lcd.print(flon,4);
@@ -161,7 +186,7 @@ void loop(){
       if(displayOn)
 			 lcd.setCursor(0,1); 
 
-			print_float(flat, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
+			// print_float(flat, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
 
       if(displayOn)
 			 lcd.print(flat,4);
@@ -169,13 +194,16 @@ void loop(){
 			dataFile.print(flat,5);
       dataFile.println("</gx:coord>\n");
 
-      Serial.print("<gx:coord>");
-      Serial.print(flon);
-      Serial.print(" ");
-      Serial.print(flat);
-      Serial.println("</gx:coord>");
+      // Serial.print("<gx:coord>");
+      // Serial.print(flon);
+      // Serial.print(" ");
+      // Serial.print(flat);
+      // Serial.println("</gx:coord>");
 
       countDot++;
+
+      sprintf(sz, "%g-%e", flon, flon);
+      Serial.println(sz);
 
       dataFile.close();
     } else {
