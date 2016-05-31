@@ -22,6 +22,7 @@ int lcd_key     = 0;
 int adc_key_in  = 0;
 int countDot = 1;
 int delayValue = 1000;
+int notaPin = 9;
 
 File dataFile;
 
@@ -33,6 +34,17 @@ File dataFile;
 #define btnNONE   5
 
 boolean displayOn = true;
+
+void oneTone(int nota, int longTime, int itemPin) {
+    tone(notaPin, nota);
+    delay(longTime);
+    noTone(notaPin);
+  }
+void setTone(int nota, int longTime, int itemPin){
+  for(int i = 0; i < itemPin; i++){
+    oneTone(nota, longTime, itemPin);
+  }
+}
  
 int read_LCD_buttons(){
     adc_key_in = analogRead(0); 
@@ -59,11 +71,18 @@ void setup(){
 	// // pinMode(bee, OUTPUT);
 	pinMode(0, INPUT);
 	pinMode(1, INPUT);
-	pinMode(12, OUTPUT);
+	pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
 
 	lcd.begin();
 	lcd.backlight();
 	lcd.setCursor(0,0); 
+
+  // setTone(800, 200, 1);
+// digitalWrite(6, 1000//);
+  // tone(9, 500);
+  // delay(500);
+  // noTone(9);
 
 	if (!SD.begin(4))
 	lcd.println("Card failed  ");
@@ -74,6 +93,14 @@ void setup(){
 
 void loop(){
   char sz[32];
+
+  // tone(9, 500);
+  // delay(500);
+  // noTone(9);
+
+  // digitalWrite(10, LOW); 
+
+  digitalWrite(9, 10); 
 
   // if(displayOn)
     // lcd.clear();
