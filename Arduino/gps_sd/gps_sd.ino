@@ -68,21 +68,22 @@ void setup(){
 
   Serial.println("start");
 
-	// // pinMode(bee, OUTPUT);
+  analogWrite(6, 10); 
+  delay(100);
+  analogWrite(6, 0); 
+  delay(100);
+  analogWrite(6, 10); 
+  delay(100);
+  analogWrite(6, 0);
+
 	pinMode(0, INPUT);
 	pinMode(1, INPUT);
-	pinMode(9, OUTPUT);
+	pinMode(6, OUTPUT);
   pinMode(10, OUTPUT);
 
 	lcd.begin();
 	lcd.backlight();
 	lcd.setCursor(0,0); 
-
-  // setTone(800, 200, 1);
-// digitalWrite(6, 1000//);
-  // tone(9, 500);
-  // delay(500);
-  // noTone(9);
 
 	if (!SD.begin(4))
 	lcd.println("Card failed  ");
@@ -94,29 +95,10 @@ void setup(){
 void loop(){
   char sz[32];
 
-  // tone(9, 500);
-  // delay(500);
-  // noTone(9);
-
-  // digitalWrite(10, LOW); 
-
-  digitalWrite(9, 10); 
-
-  // if(displayOn)
-    // lcd.clear();
-
   float flat, flon;
   unsigned long age, date, time, chars = 0;
   gps.f_get_position(&flat, &flon, &age);
 
-  // if(analogRead(3) < 500){
-  //   displayOn = false;
-  //   Serial.println(analogRead(3));
-  // }
-  // else {
-  //   displayOn = true;
-  //   Serial.println(analogRead(3));
-  // }
   if(clear){
     lcd.clear();
   }    
