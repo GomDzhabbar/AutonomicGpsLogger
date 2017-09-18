@@ -45,7 +45,7 @@ void setTone(int nota, int longTime, int itemPin){
     oneTone(nota, longTime, itemPin);
   }
 }
- 
+  
 int read_LCD_buttons(){
     adc_key_in = analogRead(0); 
 
@@ -53,10 +53,10 @@ int read_LCD_buttons(){
 
     // For V1.1 us this threshold
     if (adc_key_in < 50)   return btnRIGHT;  
-    if (adc_key_in < 250)  return btnUP; 
-    if (adc_key_in < 450)  return btnDOWN; 
-    if (adc_key_in < 650)  return btnLEFT; 
-    if (adc_key_in < 850)  return btnSELECT;  
+    if (adc_key_in < 250)  return btnUP;
+    if (adc_key_in < 450)  return btnDOWN;
+    if (adc_key_in < 650)  return btnLEFT;
+    if (adc_key_in < 850)  return btnSELECT;
 
     return btnNONE;
 }
@@ -68,18 +68,18 @@ void setup(){
 
   Serial.println("start");
 
-  analogWrite(6, 10); 
-  delay(100);
-  analogWrite(6, 0); 
-  delay(100);
-  analogWrite(6, 10); 
-  delay(100);
-  analogWrite(6, 0);
+  // analogWrite(6, 10); 
+  // delay(100);
+  // analogWrite(6, 0); 
+  // delay(100);
+  // analogWrite(6, 10); 
+  // delay(100);
+  // analogWrite(6, 0);
 
-	pinMode(0, INPUT);
-	pinMode(1, INPUT);
-	pinMode(6, OUTPUT);
-  pinMode(10, OUTPUT);
+	// pinMode(0, INPUT);
+	// pinMode(1, INPUT);
+	// pinMode(6, OUTPUT);
+  // pinMode(10, OUTPUT);
 
 	lcd.begin();
 	lcd.backlight();
@@ -131,7 +131,6 @@ void loop(){
       }
 
     if (dataFile) {
-//----------------------------------------------------------------------------------------------------------------------------------------
       sprintf(sz, "%04d-%02d-%02dT%02d:%02d:%02dZ",year, month, day, hour+3, minute, second);
      
       
@@ -157,7 +156,6 @@ void loop(){
         lcd.print(sz);
       	lcd.setCursor(0,0); 
       }
- //----------------------------------------------------------------------------------------------------------------------------------------
 			print_float(flon, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
 
       if(displayOn) 
@@ -198,12 +196,10 @@ void loop(){
 
 	  // Serial.println();
   }	
-  
   smartdelay(delayValue);
 }
 
-static void smartdelay(unsigned long ms)
-{
+static void smartdelay(unsigned long ms) {
   unsigned long start = millis();
   do 
   {
@@ -212,16 +208,12 @@ static void smartdelay(unsigned long ms)
   } while (millis() - start < ms);
 }
 
-static void print_float(float val, float invalid, int len, int prec)
-{
-  if (val == invalid)
-  {
+static void print_float(float val, float invalid, int len, int prec) {
+  if (val == invalid)  {
     while (len-- > 1)
       Serial.print('*');
     Serial.print(' ');
-  }
-  else
-  {
+  }  else  {
     // Serial.print(val, prec);
     int vi = abs((int)val);
     int flen = prec + (val < 0.0 ? 2 : 1); // . and -
@@ -232,8 +224,7 @@ static void print_float(float val, float invalid, int len, int prec)
   smartdelay(0);
 }
 
-static void print_date(TinyGPS &gps)
-{
+static void print_date(TinyGPS &gps) {
   int year;
   byte month, day, hour, minute, second, hundredths;
   unsigned long age;
@@ -251,8 +242,7 @@ static void print_date(TinyGPS &gps)
   smartdelay(0);
 }
 
-static void print_int(unsigned long val, unsigned long invalid, int len)
-{
+static void print_int(unsigned long val, unsigned long invalid, int len) {
   char sz[32];
   if (val == invalid)
     strcpy(sz, "*******");
